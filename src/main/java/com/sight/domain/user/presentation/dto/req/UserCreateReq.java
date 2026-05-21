@@ -5,11 +5,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public record UserCreateReq(
         String name,
+        String profile,
         String password
 ) {
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .name(name)
+                .profile(profile)
                 .password(passwordEncoder.encode(password))
                 .build();
     }

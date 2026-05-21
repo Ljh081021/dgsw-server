@@ -26,16 +26,13 @@ public class User {
     private String password;
 
     @Column
+    private String profile;
+
+    @Column
     private LocalDateTime created_at;
 
     public void update(UserUpdateReq req) {
         this.name = req.name();
-    }
-
-    @Builder
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-        this.created_at = LocalDateTime.now();
+        this.profile = req.profile();
     }
 }

@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @SuperBuilder
@@ -23,4 +26,13 @@ public class Post {
 
     @Column
     private double longitude;
+
+    @Column
+    private String content;
+
+    @Column
+    private LocalDateTime created_at;
+
+    @ElementCollection
+    private List<String> imageUrl;
 }
