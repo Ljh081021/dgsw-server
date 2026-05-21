@@ -8,6 +8,7 @@ import com.sight.domain.user.presentation.dto.req.UserUpdateReq;
 import com.sight.domain.user.presentation.dto.res.UserRes;
 import com.sight.global.exception.CustomException;
 import com.sight.global.response.Response;
+import com.sight.global.security.usecase.UserSessionHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
+    private final UserSessionHolder userSessionHolder;
 
     @Transactional
     public Response signup(UserCreateReq req) {
@@ -33,25 +35,22 @@ public class UserService {
         return Response.created("회원가입이 왑료되었습니다.");
     }
 
-    public UserRes findOneUser(Long id) {
-        User user = userRepo.findById(id).orElseThrow();
-
+    public UserRes findOneUser() {
+        User user = userSessionHolder.getUser();
         return UserRes.from(user);
     }
 
     @Transactional
-    public Response updateUser(Long id, UserUpdateReq req) {
-        User user = userRepo.findById(id).orElseThrow();
-
+    public Response updateUser(UserUpdateReq req) {
+        User user = userSessionHolder.getUser();
         user.update(req);
-
         return Response.ok("정상적으로 수정되었습니다.");
     }
 
     @Transactional
-    public Response deleteUser(Long id) {
-        userRepo.deleteById(id);
-
+    public Response deleteUser() {
+        User user = userSessionHolder.getUser();
+        userRepo.delete(user);
         return Response.ok("정상적으로 삭제되었습니다.");
     }
 }

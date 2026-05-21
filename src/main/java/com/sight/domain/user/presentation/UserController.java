@@ -20,18 +20,18 @@ public class UserController {
         return userService.signup(req);
     }
 
-    @GetMapping("/{id}")
-    public UserRes getMember(@PathVariable("id") Long id) {
-        return userService.findOneUser(id);
+    @GetMapping("")
+    public UserRes getMember() {
+        return userService.findOneUser();
     }
 
-    @PutMapping("/{id}")
-    public Response updateMember(@PathVariable("id") Long id, @RequestBody UserUpdateReq req) {
-        return userService.updateUser(id, req);
+    @PutMapping("")
+    public Response updateMember(@RequestBody UserUpdateReq req) {
+        return userService.updateUser(req);
     }
 
-    @DeleteMapping("/{id}")
-    public Response deleteMember(@PathVariable("id") Long id) {
-        return userService.deleteUser(id);
+    @DeleteMapping("")
+    public Response deleteMember() {
+        return userService.deleteUser();
     }
 }
