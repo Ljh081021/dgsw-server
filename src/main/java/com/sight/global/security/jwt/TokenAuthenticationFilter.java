@@ -43,16 +43,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("wow");
-        System.out.println(request.getHeader("Authorization"));
         String token
                 = getAccessToken(request.getHeader(HEADER_AUTHORIZATION));
         if(StringUtils.hasText(token)
                 && tokenProvider.validToken(token)){
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println(authentication);
-            System.out.println(SecurityContextHolder.getContext().getAuthentication());
         }
         filterChain.doFilter(request, response);
     }

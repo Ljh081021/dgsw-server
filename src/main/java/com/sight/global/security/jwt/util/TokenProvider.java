@@ -47,7 +47,6 @@ public class TokenProvider {
         );
     }
 
-
     public String generateToken(User user, Duration expiredAt) {
         Date now = new Date();
         return makeToken(

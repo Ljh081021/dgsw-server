@@ -11,6 +11,7 @@ import com.sight.global.response.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public Response signup(UserCreateReq req) {
 
         if (userRepo.existsByName(req.name())) {
@@ -37,6 +39,7 @@ public class UserService {
         return UserRes.from(user);
     }
 
+    @Transactional
     public Response updateUser(Long id, UserUpdateReq req) {
         User user = userRepo.findById(id).orElseThrow();
 
@@ -45,6 +48,7 @@ public class UserService {
         return Response.ok("정상적으로 수정되었습니다.");
     }
 
+    @Transactional
     public Response deleteUser(Long id) {
         userRepo.deleteById(id);
 

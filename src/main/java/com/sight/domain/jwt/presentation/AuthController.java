@@ -2,11 +2,8 @@ package com.sight.domain.jwt.presentation;
 
 import com.sight.domain.jwt.presentation.dto.req.LoginReq;
 import com.sight.domain.jwt.presentation.dto.req.TokenReq;
-import com.sight.domain.jwt.presentation.dto.res.LoginRes;
 import com.sight.domain.jwt.presentation.dto.res.TokenRes;
 import com.sight.domain.jwt.service.AuthService;
-import com.sight.domain.user.presentation.dto.req.UserCreateReq;
-import com.sight.global.response.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public LoginRes login(@RequestBody LoginReq req) {
+    public TokenRes login(@RequestBody LoginReq req) {
         return authService.login(req);
     }
 
