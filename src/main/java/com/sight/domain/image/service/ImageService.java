@@ -2,7 +2,9 @@ package com.sight.domain.image.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.sight.domain.image.domain.enums.error.ImageErrorCode;
 import com.sight.domain.image.presentation.dto.res.ImageInfo;
+import com.sight.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,19 +31,17 @@ public class ImageService {
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
+            amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
 
-            return new ImageInfo(fileUrl, fileName);
+            return ImageInfo.from(fileUrl, fileName);
 
         } catch (IOException e) {
-            return null;
+            throw new CustomException(ImageErrorCode.UPLOAD_FAIL);
         }
     }
 
     public void deleteImage(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-
-        System.out.println(fileName);
         amazonS3Client.deleteObject(bucket, fileName);
     }
 }
