@@ -1,4 +1,4 @@
-package com.sight.domain.image.domain.enums.error;
+package com.sight.domain.post.error;
 
 import com.sight.global.exception.error.CustomErrorCode;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum ImageErrorCode implements CustomErrorCode {
+public enum PostErrorCode implements CustomErrorCode {
 
-    UPLOAD_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+    POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시물을 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String message;

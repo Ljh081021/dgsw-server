@@ -2,7 +2,7 @@ package com.sight.domain.image.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.sight.domain.image.domain.enums.error.ImageErrorCode;
+import com.sight.domain.image.error.ImageErrorCode;
 import com.sight.domain.image.presentation.dto.res.ImageInfo;
 import com.sight.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;

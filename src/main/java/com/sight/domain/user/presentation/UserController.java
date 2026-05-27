@@ -20,17 +20,17 @@ public class UserController {
         return userService.signup(req);
     }
 
-    @GetMapping("")
+    @GetMapping("/one")
     public UserRes getMember() {
         return userService.findOneUser();
     }
 
-    @PutMapping("")
+    @PutMapping("/update")
     public Response updateMember(@RequestBody UserUpdateReq req) {
         return userService.updateUser(req);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public Response deleteMember() {
         return userService.deleteUser();
     }

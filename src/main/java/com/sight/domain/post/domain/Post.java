@@ -1,5 +1,7 @@
 package com.sight.domain.post.domain;
 
+import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
+import com.sight.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,19 @@ public class Post {
     @Column
     private LocalDateTime created_at;
 
+    @Column
+    private LocalDateTime updated_at;
+
+    @ManyToOne
+    private User writer;
+
     @ElementCollection
-    private List<String> imageUrl;
+    private List<String> imageUrls;
+
+    public void update(PostUpdateReq req) {
+        this.title = req.title();
+        this.content = req.content();
+        this.imageUrls = req.imageUrls();
+        this.updated_at = LocalDateTime.now();
+    }
 }
