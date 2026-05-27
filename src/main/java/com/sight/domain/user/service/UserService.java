@@ -53,4 +53,22 @@ public class UserService {
         userRepo.delete(user);
         return Response.ok("정상적으로 삭제되었습니다.");
     }
+
+    @Transactional
+    public Response likePost(Long postId) {
+        userSessionHolder.getUser().like(postId);
+        return Response.ok("게시물에 좋아요를 누르셨습니다.");
+    }
+
+    @Transactional
+    public Response dislikePost(Long postId) {
+        userSessionHolder.getUser().dislike(postId);
+        return Response.ok("게시물에 싫어요를 누르셨습니다.");
+    }
+
+    @Transactional
+    public Response bookmarkPost(Long postId) {
+        userSessionHolder.getUser().bookmark(postId);
+        return Response.ok("게시물을 북마크에 추가하셨습니다.");
+    }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,8 +32,29 @@ public class User {
     @Column
     private LocalDateTime created_at;
 
+    @ElementCollection
+    private List<Long> liked;
+
+    @ElementCollection
+    private List<Long> disliked;
+
+    @ElementCollection
+    private List<Long> bookmarked;
+
     public void update(UserUpdateReq req) {
         this.name = req.name();
         this.profile = req.profile();
+    }
+
+    public void like(Long postId) {
+        this.liked.add(postId);
+    }
+
+    public void dislike(Long postId) {
+        this.disliked.add(postId);
+    }
+
+    public void bookmark(Long postId) {
+        this.bookmarked.add(postId);
     }
 }

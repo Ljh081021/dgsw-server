@@ -100,6 +100,7 @@ public class PostService {
         };
     }
 
+    //test
     //{
     //  "latitude": "37.5665",
     //  "longitude": "126.9780",

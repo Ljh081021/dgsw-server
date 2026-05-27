@@ -34,4 +34,19 @@ public class UserController {
     public Response deleteMember() {
         return userService.deleteUser();
     }
+
+    @PatchMapping("/like/{id}")
+    public Response like(@PathVariable Long id) {
+        return userService.likePost(id);
+    }
+
+    @PatchMapping("/dislike/{id}")
+    public Response dislike(@PathVariable Long id) {
+        return userService.dislikePost(id);
+    }
+
+    @PatchMapping("/bookmark/{id}")
+    public Response bookmark(@PathVariable Long id) {
+        return userService.bookmarkPost(id);
+    }
 }
