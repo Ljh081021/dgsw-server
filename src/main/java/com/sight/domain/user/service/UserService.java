@@ -1,5 +1,6 @@
 package com.sight.domain.user.service;
 
+import com.sight.domain.reliability.service.ReliabilityService;
 import com.sight.domain.user.domain.User;
 import com.sight.domain.user.domain.repo.UserRepo;
 import com.sight.domain.user.error.UserErrorCode;
@@ -21,13 +22,13 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final UserSessionHolder userSessionHolder;
+    private final ReliabilityService reliabilityService;
 
     @Transactional
     public Response signup(UserCreateReq req) {
-
-        if (userRepo.existsByName(req.name())) {
-            throw new CustomException(UserErrorCode.DUPLICATED_NAME);
-        }
+        if (req.name() == null) throw new CustomException(UserErrorCode.EMPTY_NAME);
+        if (req.password() == null) throw new CustomException(UserErrorCode.EMPTY_PASSWORD);
+        if (userRepo.existsByName(req.name())) throw new CustomException(UserErrorCode.DUPLICATED_NAME);
 
         User user = req.toUser(passwordEncoder);
         userRepo.save(user);
@@ -37,7 +38,8 @@ public class UserService {
 
     public UserRes findOneUser() {
         User user = userSessionHolder.getUser();
-        return UserRes.from(user);
+        double reliability = reliabilityService.averageReliability(user.getId());
+        return UserRes.from(user, reliability);
     }
 
     @Transactional

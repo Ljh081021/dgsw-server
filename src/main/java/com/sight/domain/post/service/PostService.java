@@ -28,14 +28,11 @@ public class PostService {
 
     @Transactional
     public Response save(PostCreateReq req) {
-        Post post = PostCreateReq.to(
-                req.title(),
-                req.latitude(),
-                req.longitude(),
-                req.content(),
-                userSessionHolder.getUser(),
-                req.imageUrls()
-        );
+        if (req.title() == null) {
+            throw new CustomException(PostErrorCode.EMPTY_TITLE);
+        }
+
+        Post post = req.to(userSessionHolder.getUser());
         postRepo.save(post);
         return Response.created("게시물이 정상적으로 작성 되었습니다.");
     }

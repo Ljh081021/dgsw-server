@@ -11,16 +11,18 @@ public record UserRes(
         String name,
         String profile,
         LocalDateTime created_at,
+        double reliability,
         List<Long> liked,
         List<Long> disliked,
         List<Long> bookmarked
 ) {
-    public static UserRes from(User user) {
+    public static UserRes from(User user, double reliability) {
         return new UserRes(
                 user.getId(),
                 user.getName(),
                 user.getProfile(),
                 user.getCreated_at(),
+                reliability,
                 user.getLiked(),
                 user.getDisliked(),
                 user.getBookmarked()

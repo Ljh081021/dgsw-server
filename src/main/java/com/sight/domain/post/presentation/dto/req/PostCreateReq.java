@@ -13,14 +13,7 @@ public record PostCreateReq(
         String content,
         List<String> imageUrls
 ) {
-    public static Post to(
-            String title,
-            double latitude,
-            double longitude,
-            String content,
-            User writer,
-            List<String> imageUrls
-    ) {
+    public Post to(User writer) {
         return Post.builder()
                 .title(title)
                 .latitude(latitude)

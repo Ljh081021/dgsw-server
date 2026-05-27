@@ -2,6 +2,7 @@ package com.sight.domain.user.domain;
 
 import com.sight.domain.user.presentation.dto.req.UserUpdateReq;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @SuperBuilder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "users")
 public class User {
 
     @Id
@@ -26,10 +28,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     private String profile;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime created_at;
 
     @ElementCollection

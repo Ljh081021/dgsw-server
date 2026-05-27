@@ -24,9 +24,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final String[] SHOULD_NOT_FILTER_URLS = {
-            "/api/auth/**",
+            "/user/signup",
+            "/auth/**",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/h2-console/**"
     };
     private final AntPathMatcher antPathMatcher
             = new AntPathMatcher();
