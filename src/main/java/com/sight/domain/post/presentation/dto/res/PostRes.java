@@ -12,7 +12,7 @@ public record PostRes(
         double latitude,
         double longitude,
         String content,
-        User writer,
+        Long writer,
         int likeNum,
         LocalDateTime created_at,
         List<String> imageUrl
@@ -24,7 +24,7 @@ public record PostRes(
                 post.getLatitude(),
                 post.getLongitude(),
                 post.getContent(),
-                post.getWriter(),
+                post.getWriterId(),
                 post.getLikeNum(),
                 post.getCreated_at(),
                 post.getImageUrls()

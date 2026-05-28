@@ -18,6 +18,6 @@ public class ReliabilityController {
 
     @PostMapping("/save")
     public Response save(@RequestBody ReliabilityCreateReq req) {
-        return reliabilityService.save(req);
+        return reliabilityService.save(req, false);
     }
 }

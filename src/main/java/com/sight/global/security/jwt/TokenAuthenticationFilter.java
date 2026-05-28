@@ -23,22 +23,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
 
     private final TokenProvider tokenProvider;
-    private final String[] SHOULD_NOT_FILTER_URLS = {
-            "/user/signup",
-            "/auth/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/h2-console/**"
-    };
     private final AntPathMatcher antPathMatcher
             = new AntPathMatcher();
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getServletPath();
-        return Arrays.stream(SHOULD_NOT_FILTER_URLS).anyMatch(
-                pattern -> antPathMatcher.match(pattern, path)
-        );
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

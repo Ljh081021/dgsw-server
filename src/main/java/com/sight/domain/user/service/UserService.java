@@ -1,9 +1,8 @@
 package com.sight.domain.user.service;
 
-import com.sight.domain.post.domain.Post;
 import com.sight.domain.post.domain.repo.PostRepo;
-import com.sight.domain.post.error.PostErrorCode;
 import com.sight.domain.post.service.PostService;
+import com.sight.domain.reliability.presentation.dto.req.ReliabilityCreateReq;
 import com.sight.domain.reliability.service.ReliabilityService;
 import com.sight.domain.user.domain.User;
 import com.sight.domain.user.domain.repo.UserRepo;
@@ -27,7 +26,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserSessionHolder userSessionHolder;
     private final ReliabilityService reliabilityService;
-    private final PostRepo postRepo;
     private final PostService postService;
 
     @Transactional
@@ -38,6 +36,7 @@ public class UserService {
 
         User user = req.toUser(passwordEncoder);
         userRepo.save(user);
+        reliabilityService.save(new ReliabilityCreateReq(100.0, user.getId()), true);
 
         return Response.created("회원가입이 왑료되었습니다.");
     }
@@ -60,26 +59,32 @@ public class UserService {
     public Response deleteUser() {
         User user = userSessionHolder.getUser();
         userRepo.delete(user);
-        return Response.ok("정상적으로 삭제되었습니다.");
+        return Response.noContent("정상적으로 삭제되었습니다.");
     }
 
     @Transactional
     public Response likePost(Long postId) {
-        userSessionHolder.getUser().like(postId);
+        User user = userSessionHolder.getUser();
+        user.like(postId);
         postService.updateLikeNum(postId, 1);
+        userRepo.save(user);
         return Response.ok("게시물에 좋아요를 누르셨습니다.");
     }
 
     @Transactional
     public Response dislikePost(Long postId) {
-        userSessionHolder.getUser().dislike(postId);
+        User user = userSessionHolder.getUser();
+        user.dislike(postId);
         postService.updateLikeNum(postId, -1);
+        userRepo.save(user);
         return Response.ok("게시물에 좋아요를 취소 하셨습니다.");
     }
 
     @Transactional
     public Response bookmarkPost(Long postId) {
-        userSessionHolder.getUser().bookmark(postId);
+        User user = userSessionHolder.getUser();
+        user.bookmark(postId);
+        userRepo.save(user);
         return Response.ok("게시물을 북마크에 추가하셨습니다.");
     }
 }

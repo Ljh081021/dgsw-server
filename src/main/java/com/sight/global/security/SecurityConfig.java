@@ -42,6 +42,7 @@ public class SecurityConfig {
                         //인증, 인가
                         .requestMatchers("/user/signup").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/reissue").permitAll()
 
                         //swagger
                         .requestMatchers("/v3/api-docs/**").permitAll()
@@ -49,6 +50,17 @@ public class SecurityConfig {
 
                         //db
                         .requestMatchers("/h2-console/**").permitAll()
+
+                        //get post
+                        .requestMatchers("/all/**").permitAll()
+                        .requestMatchers("/post/all/**").permitAll()
+                        .requestMatchers("/post/one/**").permitAll()
+                        .requestMatchers("/post/recommended/**").permitAll()
+                        .requestMatchers("/post/search/**").permitAll()
+
+                        //image
+                        .requestMatchers("/image/upload/**").permitAll()
+
                         .anyRequest().authenticated()
                 );
 

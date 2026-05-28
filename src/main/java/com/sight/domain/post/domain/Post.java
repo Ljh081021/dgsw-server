@@ -38,9 +38,11 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime created_at;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Region region;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
 
@@ -53,9 +55,8 @@ public class Post {
     @Column
     private LocalDateTime updated_at;
 
-    @ManyToOne
-    @JoinColumn
-    private User writer;
+    @Column(nullable = false)
+    private Long writerId;
 
     @ElementCollection
     private List<String> tags;

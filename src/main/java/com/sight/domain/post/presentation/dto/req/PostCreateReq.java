@@ -19,7 +19,7 @@ public record PostCreateReq(
         List<String> tags,
         List<String> imageUrls
 ) {
-    public Post to(User writer) {
+    public Post to(Long writer) {
         return Post.builder()
                 .title(title)
                 .latitude(latitude)
@@ -30,7 +30,7 @@ public record PostCreateReq(
                 .congestion(congestion)
                 .tags(tags)
                 .created_at(LocalDateTime.now())
-                .writer(writer)
+                .writerId(writer)
                 .imageUrls(imageUrls)
                 .build();
     }

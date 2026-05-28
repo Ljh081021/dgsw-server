@@ -1,6 +1,5 @@
 package com.sight.domain.reliability.domain;
 
-import com.sight.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

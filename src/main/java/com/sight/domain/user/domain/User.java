@@ -34,10 +34,10 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime created_at;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> liked;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Long> bookmarked;
 
     public void update(UserUpdateReq req) {

@@ -1,6 +1,8 @@
 package com.sight.domain.post.service;
 
 import com.sight.domain.post.domain.Post;
+import com.sight.domain.post.domain.enums.Category;
+import com.sight.domain.post.domain.enums.Region;
 import com.sight.domain.post.domain.repo.PostRepo;
 import com.sight.domain.post.error.PostErrorCode;
 import com.sight.domain.post.presentation.dto.req.*;
@@ -31,7 +33,7 @@ public class PostService {
             throw new CustomException(PostErrorCode.EMPTY_TITLE);
         }
 
-        Post post = req.to(userSessionHolder.getUser());
+        Post post = req.to(userSessionHolder.getUser().getId());
         postRepo.save(post);
         return Response.created("게시물이 정상적으로 작성 되었습니다.");
     }
@@ -43,11 +45,17 @@ public class PostService {
         return PostRes.from(post);
     }
 
-    public List<PostListRes> findByScreenAndUserPosition(PostGetReq req) {
-        double userLat = Double.parseDouble(req.latitude());
-        double userLon = Double.parseDouble(req.longitude());
+    public List<PostListRes> findByScreenAndUserPosition(
+            String latitude,
+            String longitude,
+            int screenWidth,
+            int screenHeight,
+            Double zoomLevel
+    ) {
+        double userLat = Double.parseDouble(latitude);
+        double userLon = Double.parseDouble(longitude);
 
-        double[] boundingBox = calculateBoundingBox(userLat, userLon, req.screenWidth(), req.screenHeight(), req.zoomLevel());
+        double[] boundingBox = calculateBoundingBox(userLat, userLon, screenWidth, screenHeight, zoomLevel);
         double minLat = boundingBox[0];
         double maxLat = boundingBox[1];
         double minLon = boundingBox[2];
@@ -66,28 +74,29 @@ public class PostService {
                 () -> new CustomException(PostErrorCode.POST_NOT_FOUND)
         );
         post.update(req);
+        postRepo.save(post);
         return Response.ok("게시물이 정상적으로 업데이트 되었습니다.");
     }
 
     @Transactional
     public Response delete(Long postId) {
         postRepo.deleteById(postId);
-        return Response.ok("게시물이 정상적으로 삭제 되었습니다.");
+        return Response.noContent("게시물이 정상적으로 삭제 되었습니다.");
     }
 
-    public List<PostListRes> search(PostSearchReq req) {
+    public List<PostListRes> search(Region region, Category category, String tag, Double congestion) {
         return postRepo.findAll().stream()
-                .filter(post -> req.region() == null || post.getRegion() == req.region())
-                .filter(post -> req.category() == null || post.getCategory() == req.category())
-                .filter(post -> req.tag() == null || post.getTags().contains(req.tag()))
-                .filter(post -> req.congestion() == null || post.getCongestion() <= req.congestion())
+                .filter(post -> region == null || post.getRegion() == region)
+                .filter(post -> category == null || post.getCategory() == category)
+                .filter(post -> tag == null || post.getTags().contains(tag))
+                .filter(post -> congestion == null || post.getCongestion() <= congestion)
                 .map(PostListRes::from)
                 .collect(Collectors.toList());
     }
 
-    public List<PostListRes> recommend(PostRecommendReq req) {
+    public List<PostListRes> recommend(Region region) {
         return postRepo.findAll().stream()
-                .filter(post -> req.region() == null || post.getRegion() == req.region())
+                .filter(post -> region == null || post.getRegion() == region)
                 .sorted(Comparator.comparingInt(Post::getLikeNum).reversed())
                 .map(PostListRes::from)
                 .collect(Collectors.toList());

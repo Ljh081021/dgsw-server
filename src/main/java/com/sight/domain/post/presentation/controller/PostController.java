@@ -1,5 +1,7 @@
 package com.sight.domain.post.presentation.controller;
 
+import com.sight.domain.post.domain.enums.Category;
+import com.sight.domain.post.domain.enums.Region;
 import com.sight.domain.post.presentation.dto.req.*;
 import com.sight.domain.post.presentation.dto.res.PostListRes;
 import com.sight.domain.post.presentation.dto.res.PostRes;
@@ -28,8 +30,14 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public List<PostListRes> findByScreenAndUserPosition(@RequestBody PostGetReq req) {
-        return postService.findByScreenAndUserPosition(req);
+    public List<PostListRes> findByScreenAndUserPosition(
+            @RequestParam String latitude,
+            @RequestParam String longitude,
+            @RequestParam int screenWidth,
+            @RequestParam int screenHeight,
+            @RequestParam Double zoomLevel
+    ) {
+        return postService.findByScreenAndUserPosition(latitude, longitude, screenWidth, screenHeight, zoomLevel);
     }
 
     @PutMapping("/update/{id}")
@@ -43,12 +51,16 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public List<PostListRes> search(@RequestBody PostSearchReq req) {
-        return postService.search(req);
+    public List<PostListRes> search(
+            @RequestParam(required = false) Region region,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) Double congestion) {
+        return postService.search(region, category, tag, congestion);
     }
 
     @GetMapping("/recommended")
-    public List<PostListRes> recommended(@RequestBody PostRecommendReq req) {
-        return postService.recommend(req);
+    public List<PostListRes> recommended(@RequestParam Region region) {
+        return postService.recommend(region);
     }
 }
