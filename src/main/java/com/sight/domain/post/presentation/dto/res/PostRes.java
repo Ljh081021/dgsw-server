@@ -3,6 +3,7 @@ package com.sight.domain.post.presentation.dto.res;
 import com.sight.domain.post.domain.Post;
 import com.sight.domain.user.domain.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record PostRes(
@@ -12,6 +13,8 @@ public record PostRes(
         double longitude,
         String content,
         User writer,
+        int likeNum,
+        LocalDateTime created_at,
         List<String> imageUrl
 ) {
     public static PostRes from(Post post) {
@@ -22,6 +25,8 @@ public record PostRes(
                 post.getLongitude(),
                 post.getContent(),
                 post.getWriter(),
+                post.getLikeNum(),
+                post.getCreated_at(),
                 post.getImageUrls()
         );
     }

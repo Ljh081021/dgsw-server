@@ -38,12 +38,9 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime created_at;
 
-    @Column
-    private LocalDateTime updated_at;
-
     @Column(nullable = false)
     private Region region;
-    
+
     @Column(nullable = false)
     private Category category;
 
@@ -52,6 +49,9 @@ public class Post {
 
     @Column(nullable = false)
     private int likeNum;
+
+    @Column
+    private LocalDateTime updated_at;
 
     @ManyToOne
     @JoinColumn
@@ -72,5 +72,9 @@ public class Post {
 
     public void updateLike(int num) {
         this.likeNum += num;
+    }
+
+    public void resetLike() {
+        this.likeNum = 0;
     }
 }

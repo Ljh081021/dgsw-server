@@ -10,8 +10,9 @@ public record PostListRes(
         String title,
         double latitude,
         double longitude,
-        LocalDateTime created_at,
-        User writer
+        User writer,
+        int likeNum,
+        LocalDateTime created_at
 ) {
     public static PostListRes from(Post post) {
         return new PostListRes(
@@ -19,8 +20,9 @@ public record PostListRes(
                 post.getTitle(),
                 post.getLatitude(),
                 post.getLongitude(),
-                post.getCreated_at(),
-                post.getWriter()
+                post.getWriter(),
+                post.getLikeNum(),
+                post.getCreated_at()
         );
     }
 }
