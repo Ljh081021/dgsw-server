@@ -52,6 +52,7 @@ public class UserService {
     public Response updateUser(UserUpdateReq req) {
         User user = userSessionHolder.getUser();
         user.update(req);
+        userRepo.save(user);
         return Response.ok("정상적으로 수정되었습니다.");
     }
 
