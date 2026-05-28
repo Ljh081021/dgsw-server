@@ -2,6 +2,7 @@ package com.sight.domain.post.presentation.controller;
 
 import com.sight.domain.post.presentation.dto.req.PostCreateReq;
 import com.sight.domain.post.presentation.dto.req.PostGetReq;
+import com.sight.domain.post.presentation.dto.req.PostSearchReq;
 import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
 import com.sight.domain.post.presentation.dto.res.PostListRes;
 import com.sight.domain.post.presentation.dto.res.PostRes;
@@ -42,5 +43,10 @@ public class PostController {
     @DeleteMapping("/delete/{id}")
     public Response delete(@PathVariable Long id) {
         return postService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<PostListRes> search(@RequestBody PostSearchReq req) {
+        return postService.search(req);
     }
 }

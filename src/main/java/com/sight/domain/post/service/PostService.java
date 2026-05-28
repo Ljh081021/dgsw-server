@@ -5,6 +5,7 @@ import com.sight.domain.post.domain.repo.PostRepo;
 import com.sight.domain.post.error.PostErrorCode;
 import com.sight.domain.post.presentation.dto.req.PostCreateReq;
 import com.sight.domain.post.presentation.dto.req.PostGetReq;
+import com.sight.domain.post.presentation.dto.req.PostSearchReq;
 import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
 import com.sight.domain.post.presentation.dto.res.PostListRes;
 import com.sight.domain.post.presentation.dto.res.PostRes;
@@ -74,6 +75,16 @@ public class PostService {
     public Response delete(Long postId) {
         postRepo.deleteById(postId);
         return Response.ok("게시물이 정상적으로 삭제 되었습니다.");
+    }
+
+    public List<PostListRes> search(PostSearchReq req) {
+        return postRepo.findAll().stream()
+                .filter(post -> req.region() == null || post.getRegion() == req.region())
+                .filter(post -> req.category() == null || post.getCategory() == req.category())
+                .filter(post -> req.tag() == null || post.getTags().contains(req.tag()))
+                .filter(post -> req.congestion() == null || post.getCongestion() <= req.congestion())
+                .map(PostListRes::from)
+                .collect(Collectors.toList());
     }
 
     private double[] calculateBoundingBox(double lat, double lon,

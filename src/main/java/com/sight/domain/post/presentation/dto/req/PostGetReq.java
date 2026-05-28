@@ -5,6 +5,6 @@ public record PostGetReq(
         String longitude,
         int screenWidth,
         int screenHeight,
-        double zoomLevel
+        Double zoomLevel
 ) {
 }

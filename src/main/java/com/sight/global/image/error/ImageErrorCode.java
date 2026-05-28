@@ -1,4 +1,4 @@
-package com.sight.domain.image.error;
+package com.sight.global.image.error;
 
 import com.sight.global.exception.error.CustomErrorCode;
 import lombok.Getter;

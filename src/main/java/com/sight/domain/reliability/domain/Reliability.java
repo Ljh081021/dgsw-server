@@ -20,7 +20,7 @@ public class Reliability {
     private Long id;
 
     @Column(nullable = false)
-    private double reliability;
+    private Double reliability;
 
     @Column(nullable = false)
     private Long rater;

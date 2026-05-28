@@ -1,7 +1,7 @@
-package com.sight.domain.image.presentation.controller;
+package com.sight.global.image.presentation.controller;
 
-import com.sight.domain.image.presentation.dto.res.ImageInfo;
-import com.sight.domain.image.service.ImageService;
+import com.sight.global.image.presentation.dto.res.ImageInfo;
+import com.sight.global.image.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

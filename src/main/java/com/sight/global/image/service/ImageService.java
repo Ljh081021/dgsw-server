@@ -1,9 +1,9 @@
-package com.sight.domain.image.service;
+package com.sight.global.image.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.sight.domain.image.error.ImageErrorCode;
-import com.sight.domain.image.presentation.dto.res.ImageInfo;
+import com.sight.global.image.error.ImageErrorCode;
+import com.sight.global.image.presentation.dto.res.ImageInfo;
 import com.sight.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

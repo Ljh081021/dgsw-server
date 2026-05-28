@@ -1,4 +1,4 @@
-package com.sight.domain.image.presentation.dto.res;
+package com.sight.global.image.presentation.dto.res;
 
 public record ImageInfo(
         String imageUrl,

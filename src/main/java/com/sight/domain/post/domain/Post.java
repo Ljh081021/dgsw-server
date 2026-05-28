@@ -1,5 +1,7 @@
 package com.sight.domain.post.domain;
 
+import com.sight.domain.post.domain.enums.Category;
+import com.sight.domain.post.domain.enums.Region;
 import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
 import com.sight.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -25,10 +27,10 @@ public class Post {
     private String title;
 
     @Column(nullable = false)
-    private double latitude;
+    private Double latitude;
 
     @Column(nullable = false)
-    private double longitude;
+    private Double longitude;
 
     @Column
     private String content;
@@ -39,9 +41,21 @@ public class Post {
     @Column
     private LocalDateTime updated_at;
 
+    @Column(nullable = false)
+    private Region region;
+    
+    @Column(nullable = false)
+    private Category category;
+
+    @Column(nullable = false)
+    private Double congestion;
+
     @ManyToOne
     @JoinColumn
     private User writer;
+
+    @ElementCollection
+    private List<String> tags;
 
     @ElementCollection
     private List<String> imageUrls;
