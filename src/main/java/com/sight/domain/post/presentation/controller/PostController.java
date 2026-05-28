@@ -1,9 +1,6 @@
 package com.sight.domain.post.presentation.controller;
 
-import com.sight.domain.post.presentation.dto.req.PostCreateReq;
-import com.sight.domain.post.presentation.dto.req.PostGetReq;
-import com.sight.domain.post.presentation.dto.req.PostSearchReq;
-import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
+import com.sight.domain.post.presentation.dto.req.*;
 import com.sight.domain.post.presentation.dto.res.PostListRes;
 import com.sight.domain.post.presentation.dto.res.PostRes;
 import com.sight.domain.post.service.PostService;
@@ -48,5 +45,10 @@ public class PostController {
     @GetMapping("/search")
     public List<PostListRes> search(@RequestBody PostSearchReq req) {
         return postService.search(req);
+    }
+
+    @GetMapping("/recommended")
+    public List<PostListRes> recommended(@RequestBody PostRecommendReq req) {
+        return postService.recommend(req);
     }
 }

@@ -50,6 +50,9 @@ public class Post {
     @Column(nullable = false)
     private Double congestion;
 
+    @Column(nullable = false)
+    private int likeNum;
+
     @ManyToOne
     @JoinColumn
     private User writer;
@@ -65,5 +68,9 @@ public class Post {
         this.content = req.content();
         this.imageUrls = req.imageUrls();
         this.updated_at = LocalDateTime.now();
+    }
+
+    public void updateLike(int num) {
+        this.likeNum += num;
     }
 }

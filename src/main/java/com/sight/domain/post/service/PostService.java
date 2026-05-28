@@ -3,10 +3,7 @@ package com.sight.domain.post.service;
 import com.sight.domain.post.domain.Post;
 import com.sight.domain.post.domain.repo.PostRepo;
 import com.sight.domain.post.error.PostErrorCode;
-import com.sight.domain.post.presentation.dto.req.PostCreateReq;
-import com.sight.domain.post.presentation.dto.req.PostGetReq;
-import com.sight.domain.post.presentation.dto.req.PostSearchReq;
-import com.sight.domain.post.presentation.dto.req.PostUpdateReq;
+import com.sight.domain.post.presentation.dto.req.*;
 import com.sight.domain.post.presentation.dto.res.PostListRes;
 import com.sight.domain.post.presentation.dto.res.PostRes;
 import com.sight.global.exception.CustomException;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,6 +83,21 @@ public class PostService {
                 .filter(post -> req.congestion() == null || post.getCongestion() <= req.congestion())
                 .map(PostListRes::from)
                 .collect(Collectors.toList());
+    }
+
+    public List<PostListRes> recommend(PostRecommendReq req) {
+        return postRepo.findAll().stream()
+                .filter(post -> req.region() == null || post.getRegion() == req.region())
+                .sorted(Comparator.comparingInt(Post::getLikeNum).reversed())
+                .map(PostListRes::from)
+                .collect(Collectors.toList());
+    }
+
+    public void updateLikeNum(Long postId, int num) {
+        Post post = postRepo.findById(postId).orElseThrow(
+                () -> new CustomException(PostErrorCode.POST_NOT_FOUND)
+        );
+        post.updateLike(num);
     }
 
     private double[] calculateBoundingBox(double lat, double lon,

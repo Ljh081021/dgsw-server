@@ -38,9 +38,6 @@ public class User {
     private List<Long> liked;
 
     @ElementCollection
-    private List<Long> disliked;
-
-    @ElementCollection
     private List<Long> bookmarked;
 
     public void update(UserUpdateReq req) {
@@ -53,7 +50,7 @@ public class User {
     }
 
     public void dislike(Long postId) {
-        this.disliked.add(postId);
+        this.liked.remove(postId);
     }
 
     public void bookmark(Long postId) {

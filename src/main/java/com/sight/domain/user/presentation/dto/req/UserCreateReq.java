@@ -17,7 +17,6 @@ public record UserCreateReq(
                 .profile(profile != null ? profile : "https://sight.s3.ap-northeast-2.amazonaws.com/default_profile.png")
                 .password(passwordEncoder.encode(password))
                 .liked(new ArrayList<>())
-                .disliked(new ArrayList<>())
                 .created_at(LocalDateTime.now())
                 .bookmarked(new ArrayList<>())
                 .build();

@@ -1,5 +1,9 @@
 package com.sight.domain.user.service;
 
+import com.sight.domain.post.domain.Post;
+import com.sight.domain.post.domain.repo.PostRepo;
+import com.sight.domain.post.error.PostErrorCode;
+import com.sight.domain.post.service.PostService;
 import com.sight.domain.reliability.service.ReliabilityService;
 import com.sight.domain.user.domain.User;
 import com.sight.domain.user.domain.repo.UserRepo;
@@ -23,6 +27,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserSessionHolder userSessionHolder;
     private final ReliabilityService reliabilityService;
+    private final PostRepo postRepo;
+    private final PostService postService;
 
     @Transactional
     public Response signup(UserCreateReq req) {
@@ -59,13 +65,15 @@ public class UserService {
     @Transactional
     public Response likePost(Long postId) {
         userSessionHolder.getUser().like(postId);
+        postService.updateLikeNum(postId, 1);
         return Response.ok("게시물에 좋아요를 누르셨습니다.");
     }
 
     @Transactional
     public Response dislikePost(Long postId) {
         userSessionHolder.getUser().dislike(postId);
-        return Response.ok("게시물에 싫어요를 누르셨습니다.");
+        postService.updateLikeNum(postId, -1);
+        return Response.ok("게시물에 좋아요를 취소 하셨습니다.");
     }
 
     @Transactional

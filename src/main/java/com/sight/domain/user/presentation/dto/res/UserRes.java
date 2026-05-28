@@ -13,7 +13,6 @@ public record UserRes(
         LocalDateTime created_at,
         double reliability,
         List<Long> liked,
-        List<Long> disliked,
         List<Long> bookmarked
 ) {
     public static UserRes from(User user, double reliability) {
@@ -24,7 +23,6 @@ public record UserRes(
                 user.getCreated_at(),
                 reliability,
                 user.getLiked(),
-                user.getDisliked(),
                 user.getBookmarked()
         );
     }
