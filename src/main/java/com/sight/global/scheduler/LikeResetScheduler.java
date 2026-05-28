@@ -1,5 +1,6 @@
 package com.sight.global.scheduler;
 
+import com.sight.domain.bestpost.service.BestPostService;
 import com.sight.domain.post.domain.repo.PostRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,9 +13,12 @@ import org.springframework.stereotype.Component;
 public class LikeResetScheduler {
 
     private final PostRepo postRepo;
+    private final BestPostService bestPostService;
 
-    @Scheduled(cron = "0 0 0 1 * *") // 매월 1일 자정
+    @Scheduled(cron = "0 0 0 1 * *")
     public void resetLikeCount() {
+        bestPostService.save();
+
         postRepo.findAll().forEach(post -> {
             post.resetLike();
             postRepo.save(post);
